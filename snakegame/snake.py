@@ -23,6 +23,7 @@ display = Display(altura, base)
 player = Player(pos, body, life, manzana)
 moves = ["w","a","s","d"]
 check_move = False
+print(display.imprimir(player))
 
 while True:
 
