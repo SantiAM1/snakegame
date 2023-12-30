@@ -16,7 +16,7 @@ while True:
         break
 
 #GAME CONFIG
-life = 0
+life = 1
 body = []
 last = [0,0]
 display = Display(altura, base)
@@ -47,7 +47,7 @@ while True:
     last[1] = player.pos[1]
 
     if move == "w":
-        player.up()
+        player.up(display)
         check_move = True
 
     if move == "s":
@@ -55,7 +55,7 @@ while True:
         check_move = True
 
     if move == "a":
-        player.left()
+        player.left(display)
         check_move = True
 
     if move == "d":
