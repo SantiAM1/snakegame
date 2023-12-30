@@ -1,6 +1,6 @@
 #Display size
-altura = 10
-base = 10
+altura = 8
+base = 8
 
 from funciones import pos_init, snake_long
     
@@ -11,27 +11,27 @@ class Player:
         self.life = life
         self.manzana = manzana
     
-    def up(self):
+    def up(self, display):
         if self.pos[1] == 1:
-            print("Error")
+            self.pos[1] = display.altura
         else:
             self.pos[1] -= 1
     
     def down(self, display):
         if self.pos[1] == display.altura:
-            print("Error")
+            self.pos[1] = 1
         else:
             self.pos[1] += 1
 
     def right(self, display):
         if self.pos[0] == display.base:
-            print("Error")
+            self.pos[0] = 1
         else:
             self.pos[0] += 1
     
-    def left(self):
+    def left(self, display):
         if self.pos[0] == 1:
-            print("Error")
+            self.pos[0] = display.base
         else:
             self.pos[0] -= 1
 
@@ -54,6 +54,7 @@ class Player:
                             break
                 if manzana_valida:
                     break
+
     def leng_body(self, ultimo):
         self.body = snake_long(self.body, ultimo.copy(), self.life)
 
@@ -94,4 +95,7 @@ class Display:
 
             fila = " ".join(fila)
             filas.append(fila)
+
+        filas.insert(0,"█"+"██" * (self.base-1))
+        filas.append("█"+"██" * (self.base-1))
         return "\n".join(filas)
