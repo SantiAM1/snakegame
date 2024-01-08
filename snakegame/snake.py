@@ -24,15 +24,15 @@ player = Player(pos, body, life, manzana)
 moves = ["w","a","s","d"]
 check_move = False
 print(display.imprimir(player))
-
+#START
 while True:
 
     if check_move:
+        player.leng_body(last)
         player.colision_test()
         if player.life == -1:
             print("\n\n Perdiste!")
             break
-        player.leng_body(last)
         print(player)
         print(display.imprimir(player))
         check_move = False
@@ -47,7 +47,7 @@ while True:
     last[1] = player.pos[1]
 
     if move == "w":
-        player.up(display)
+        player.up()
         check_move = True
 
     if move == "s":
@@ -55,7 +55,7 @@ while True:
         check_move = True
 
     if move == "a":
-        player.left(display)
+        player.left()
         check_move = True
 
     if move == "d":
