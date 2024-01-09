@@ -11,6 +11,7 @@ class Player:
         self.life = life
         self.manzana = manzana
         self.sentido = "up"
+        self.score = 0
     
     def up(self):
         self.sentido = "up"
@@ -53,6 +54,7 @@ class Player:
         #Detectar que el juegador come una manzana
         if self.pos == self.manzana:
             self.life += 1
+            self.score += 1
             #Nueva pos de manzana
             while True:
                 self.manzana = pos_init(altura, base)
@@ -72,7 +74,7 @@ class Player:
         self.body = snake_long(self.body, ultimo.copy(), self.life)
 
     def __str__(self):
-        return f"Pos{self.pos} Body{self.body} Life {self.life} Manzana{self.manzana}"
+        return f"---SCORE: {self.score}---"
     
 class Display:
     def __init__(self, altura, base):
@@ -92,7 +94,7 @@ class Display:
         manzana_y = player.manzana[1]
 
         filas = []
-        
+
         #Importar vectores graficos
         graph = graphics(player)
 
@@ -107,9 +109,9 @@ class Display:
                 if player.body[num][1] == i:
 
                     if num < len(graph) and graph[num] == [1, 0] and graph[num-1] == [1, 0]:
-                        fila[player.body[num][0]-1] = "="
+                        fila[player.body[num][0]-1] = "═"
                     if num < len(graph) and graph[num] == [-1, 0] and graph[num-1] == [-1, 0]:
-                        fila[player.body[num][0]-1] = "="
+                        fila[player.body[num][0]-1] = "═"
 
                     if num < len(graph) and graph[num] == [0, 1] and graph[num-1] == [0, 1]:
                         fila[player.body[num][0]-1] = "║"
@@ -155,14 +157,14 @@ class Display:
                     if num == 0 and num < len(graph) and player.sentido == "left" and graph[num] == [0, -1]:
                         fila[player.body[num][0]-1] = "╗"
                     if num == 0 and num < len(graph) and player.sentido == "left" and (graph[num] == [1, 0] or graph[num] == [-1, 0]):
-                        fila[player.body[num][0]-1] = "="   
+                        fila[player.body[num][0]-1] = "═"   
 
                     if num == 0 and num < len(graph) and player.sentido == "right" and graph[num] == [0, 1]:
                         fila[player.body[num][0]-1] = "╚"
                     if num == 0 and num < len(graph) and player.sentido == "right" and graph[num] == [0, -1]:
                         fila[player.body[num][0]-1] = "╔"
                     if num == 0 and num < len(graph) and player.sentido == "right" and (graph[num] == [1, 0] or graph[num] == [-1, 0]):
-                        fila[player.body[num][0]-1] = "="   
+                        fila[player.body[num][0]-1] = "═"   
                     
                     if num == len(player.body)-1:
                         fila[player.body[num][0]-1] = "x"
@@ -178,10 +180,14 @@ class Display:
                 if player.sentido == "left":
                     fila[posx] = "<"
 
+            #Bordes laterales
+            fila.insert(0,"█")
+            fila.append("█")
+
             fila = " ".join(fila)
             filas.append(fila)
 
-        #Bordes
-        filas.insert(0, "█" + "██" * (self.base-1))
-        filas.append("█" + "██" * (self.base-1))
+        #Bordes superiores
+        filas.insert(0, "█" + "██" * (self.base+1))
+        filas.append("█" + "██" * (self.base+1))
         return "\n".join(filas)
